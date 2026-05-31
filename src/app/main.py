@@ -126,4 +126,17 @@ def withdraw(request: dict):
     return user.to_dict()
 
 
+@app.get("/users/{account}/history")
+def get_user_history(account: str):
+
+    user = repo.get_user_by_account(account)
+
+    if user is None:
+        raise HTTPException(
+            status_code=404,
+            detail="User not found"
+        )
+
+    return {"history": [t.to_dict() for t in user.history]}
+
 handler = Mangum(app, lifespan="off")

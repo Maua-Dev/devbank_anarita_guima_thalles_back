@@ -53,6 +53,9 @@ def test_deposit():
     user.deposit(50)
 #verifica se o valor do depósito foi adicionado corretamente ao saldo
     assert user.current_balance == 1050
+    assert len(user.history) == 1
+    assert user.history[0].type == "DEPOSIT"
+    assert user.history[0].value == 50
 
 #testando método de depósito com valor inválido - negativo
 def test_invalid_deposit():
@@ -81,6 +84,9 @@ def test_withdraw():
     user.withdraw(300)
 
     assert user.current_balance == 700
+    assert len(user.history) == 1
+    assert user.history[0].type == "WITHDRAW"
+    assert user.history[0].value == 300
 
 #teste do método de saque com valor inválido - negativo
 def test_insufficient_funds():
