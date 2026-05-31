@@ -44,3 +44,30 @@ def test_get_user():
 
     assert response.status_code == 200
     assert response.json()["account"] == "11111"
+    
+def test_get_transactions():
+
+    client.post(
+        "/users/create",
+        json={
+            "name": "Ana Rita",
+            "agency": "0013",
+            "account": "99999",
+            "current_balance": 1000
+        }
+    )
+
+    client.post(
+        "/users/deposit",
+        json={
+            "account": "99999",
+            "value": 100
+        }
+    )
+
+    response = client.get(
+        "/users/99999/transactions"
+    )
+
+    assert response.status_code == 200
+    assert len(response.json()["all_transactions"]) == 1

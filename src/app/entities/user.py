@@ -1,3 +1,5 @@
+from src.app.entities.transaction import Transaction
+
 class User:
 #classe usuário é criada com seus devidos atributos (nome, agência, conta e saldo atual)
     def __init__(
@@ -25,6 +27,8 @@ class User:
         self.account = account
         self.current_balance = current_balance
 
+        self.transactions = []
+
     #definição e validação dos métodos de depósito e saque
     def deposit(self, value: float):
 
@@ -32,6 +36,16 @@ class User:
             raise ValueError("Valor inválido inserido!!")
 
         self.current_balance += value
+
+        self.transactions.append(
+            Transaction(
+                transaction_type="deposit",
+                value=value,
+                current_balance=self.current_balance
+            )
+        )
+        
+    
 
     def withdraw(self, value: float):
 
@@ -42,6 +56,14 @@ class User:
             raise ValueError("Saldo insuficiente para transação!!")
 
         self.current_balance -= value
+
+        self.transactions.append(
+            Transaction(
+                transaction_type="withdraw",
+                value=value,
+                current_balance=self.current_balance
+            )
+        )
    
    
    #retorna os dados do usuário em formato de dicionário json     

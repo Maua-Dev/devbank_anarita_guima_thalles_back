@@ -125,5 +125,22 @@ def withdraw(request: dict):
 
     return user.to_dict()
 
+@app.get("/users/{account}/transactions")
+def get_transactions(account: str):
+
+    user = repo.get_user_by_account(account)
+
+    if user is None:
+        raise HTTPException(
+            status_code=404,
+            detail="User not found"
+        )
+
+    return {
+        "all_transactions": [
+            transaction.to_dict()
+            for transaction in user.transactions
+        ]
+    }
 
 handler = Mangum(app, lifespan="off")
