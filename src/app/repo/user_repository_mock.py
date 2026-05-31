@@ -11,6 +11,7 @@ class UserRepositoryMock(UserRepositoryInterface):
     def create_user(self, user: User):
 
         self.users.append(user)
+        return user
 #verfica se o usuário está presente na lista de usuários
     def get_user_by_account(self, account: str):
 
@@ -20,3 +21,7 @@ class UserRepositoryMock(UserRepositoryInterface):
                 return user
 #caso contrário, retorna None
         return None
+    
+#retorna a lista de usuários cadastrados completa
+    def get_all_users(self):
+        return self.users

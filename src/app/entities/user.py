@@ -42,3 +42,14 @@ class User:
             raise ValueError("Saldo insuficiente para transação!!")
 
         self.current_balance -= value
+   
+   
+   #retorna os dados do usuário em formato de dicionário json     
+    def to_dict(self):
+
+        return {
+            "name": self.name,
+            "agency": self.agency,
+            "account": self.account,
+            "current_balance": self.current_balance
+        }
